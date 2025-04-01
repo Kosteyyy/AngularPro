@@ -14,6 +14,7 @@ export class OrderTableComponent {
 
     constructor(private repository: OrderRepository, differs: IterableDiffers) {
         this.differ = differs.find(this.repository.getOrders()).create();
+        console.log("🚀 ~ OrderTableComponent ~ constructor ~ differs:", differs, this.differ);
         this.dataSource.filter = 'true';
         this.dataSource.filterPredicate = (order, include) => {
             return !order.shipped || include.toString() == 'true';
@@ -39,6 +40,7 @@ export class OrderTableComponent {
 
     ngDoCheck() {
         let changes = this.differ?.diff(this.repository.getOrders());
+        console.log("🚀 ~ OrderTableComponent ~ ngDoCheck ~ changes:", changes)
         if (changes != null) {
             this.dataSource.data = this.repository.getOrders();
         }
